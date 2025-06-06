@@ -1,0 +1,100 @@
+<section class="absolute lg:relative lg:bg-[#303a4a] lg:text-white font-bold w-full lg:h-full bottom-0">
+  <div class="flex lg:flex-col lg:gap-8 items-center  lg:items-center border-t justify-between px-8 pt-3">
+
+    <div class="hidden lg:flex flex-col h-20 mt-6 gap-2 items-center">
+      <img src="./logo.png" alt="logo" class="w-full h-full object-cover" />
+      <h1 class="font-bold">Organisapp</h1>
+    </div>
+    <div class="relative  flex flex-col items-center">
+
+      <div
+        class="absolute left-9.5 border rounded-full text-[12px] flex items-center text-black justify-center bg-blue-300 font-semibold -top-1 h-4 w-4">
+        3</div>
+      <a [routerLink]="['/tareas']">
+        <fa-icon [size]="'2x'" [icon]="faListUl" [fixedWidth]="true"></fa-icon>
+      </a>
+      <small>Tareas</small>
+    </div>
+    <div [ngClass]="{ 'deshabilitado': disabled === 'home' }" class="flex flex-col items-center ">
+      <a [routerLink]="['/home']">
+        <fa-icon [size]="'2x'" [icon]="faHome " [fixedWidth]="true"></fa-icon>
+      </a>
+      <small>Inicio</small>
+    </div>
+    <button (click)="openModal()" class="flex deshabilitado-h flex-col items-center">
+      <fa-icon [size]="'2x'" [icon]="faSquarePlus " [fixedWidth]="true"></fa-icon>
+      <small>Nuevo</small>
+    </button>
+  </div>
+
+  <dialog id="create" class="modal">
+    <div class="modal-box">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute rounded right-3 top-2">✕</button>
+      </form>
+
+      <div class="flex items-center gap-4 my-4">
+        <h3 class="text-lg font-bold">Crear</h3>
+
+        <!-- Selección entre tarea y evento -->
+        <select [(ngModel)]="selectedOption" name="tipoObjeto" class="select w-40">
+          <option value="tarea">tarea</option>
+          <option value="evento">evento</option>
+        </select>
+      </div>
+      <!-- FORMULARIO PARA TAREA -->
+      <div *ngIf="selectedOption === 'tarea'">
+        <input class="input" [(ngModel)]="tareaData.titulo" name="tituloTarea" placeholder="Título de tarea" />
+        <textarea class="input" [(ngModel)]="tareaData.descripcion" name="descTarea"
+          placeholder="Descripción"></textarea>
+        <select class="select w-full" [(ngModel)]="tareaData.estado" name="estadoTarea">
+          <option value="pendiente">Pendiente</option>
+          <option value="en progreso">En progreso</option>
+          <option value="completado">Completado</option>
+        </select>
+        <select class="select w-full" [(ngModel)]="tareaData.tipo" name="tipoTarea">
+          <option value="urgente">Urgente</option>
+          <option value="normal">Normal</option>
+          <option value="sin prisa">Sin prisa</option>
+        </select>
+        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea" />
+        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaFin" name="finTarea" />
+      </div>
+
+      <!-- FORMULARIO PARA EVENTO -->
+      <div *ngIf="selectedOption === 'evento'">
+        <input class="input" [(ngModel)]="eventoData.nombreEvento" name="nombreEvento"
+          placeholder="Nombre del evento" />
+        <textarea class="input" [(ngModel)]="eventoData.descripcion" name="descEvento"
+          placeholder="Descripción"></textarea>
+        <input type="datetime-local" class="input" [(ngModel)]="eventoData.fechaInicio" name="inicioEvento" />
+        <input type="datetime-local" class="input" [(ngModel)]="eventoData.fechaFin" name="finEvento" />
+      </div>
+
+      <form method="dialog">
+        <button class="btn bg-green-500 mt-4 w-full" (click)="create()">Crear</button>
+      </form>
+
+    </div>
+  </dialog>
+
+
+
+</section>
+
+<!--
+         Tarea
+        "titulo": "Cumpleaños Francisco",
+        "descripcion": "Comprarle una tarta",
+        "estado": "en progreso",
+        "tipo": "sin prisa",
+        "fechaInicio": "2025-05-22T18:59:14.000Z",
+        "fechaFin": "2025-05-23T18:59:15.000Z",
+-->
+<!--
+         Eventos
+        "nombreEvento": "Clínica de Angular Forms",
+        "descripcion": "Sesión práctica para dominar Angular Reactive Forms.",
+        "fechaInicio": "2025-04-10T08:00:00.000Z",
+        "fechaFin": "2025-04-13T11:30:00.000Z",
+-->

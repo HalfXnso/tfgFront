@@ -1,0 +1,29 @@
+  .verMas {
+
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      opacity: 0;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.2);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      transition: ease-in-out 0.25s;
+    }
+    .tareaInfo:hover .verMas{
+      opacity: 1;
+    }
+    .tareaInfo {
+      border: 1px solid #e5e7eb;
+      padding: 1rem;
+      margin-top: 0.5rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+
+    }

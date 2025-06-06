@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@plugin "daisyui";
+
+body{
+   font-family: "Rubik", sans-serif;
+}
+.fc-daygrid-day {
+  border: 1px solid #e5e7eb;
+  /* Tailwind gray-200 */
+  height: 25px !important;
+  vertical-align: top;
+}
+
+.fc-daygrid-day-number {
+  /* Tailwind text-sm */
+  text-align: right;
+}
+
+/* Compactar eventos dentro del calendario */
+.fc-daygrid-event {
+  padding: 0 !important;
+  font-size: 0.65rem !important;
+  /* Tamaño de letra reducido */
+  line-height: 1.1 !important;
+  height: 10px !important;
+  /* Altura forzada */
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: #2360c2 !important;
+  /* Azul Tailwind */
+  color: white;
+
+}
+
+@media (max-width: 768px) {
+  .fc {
+    height: 51dvh;
+  }
+
+  .fc-toolbar {
+    margin-top: 1%;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .fc-toolbar-title {
+    font-size: 1.25rem !important;
+    /* Tailwind text-xl */
+  }
+
+  .fc-button {
+
+    padding: 0 !important;
+    font-size: 0.75rem;
+    /* Tailwind text-sm */
+  }
+
+
+  .fc-daygrid-day-events {
+    display: none;
+  }
+
+  .fc-toolbar-ltr {
+    padding-inline: 5%;
+    margin-bottom: 2% !important;
+  }
+}
+
+.dia-con-evento {
+  width: 100% !important;
+  background-color: #40ff10 !important;
+  margin: 5% !important;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .fc {
+    height: 65dvh;
+  }
+
+  .fc-toolbar-title {
+    font-size: 1.5rem !important;
+  }
+
+  .fc-button {
+    font-size: 0.85rem;
+  }
+
+  .fc-daygrid-day-events {
+    display: block;
+  }
+
+  .fc-toolbar-ltr {
+    padding-inline: 3%;
+  }
+}
+
+/* Laptop (1024px <= width < 1280px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .fc {
+    height: 70dvh;
+  }
+
+  .fc-toolbar-title {
+    font-size: 1.75rem !important;
+  }
+
+  .fc-button {
+    font-size: 0.9rem;
+  }
+
+  .fc-toolbar-ltr {
+    padding-inline: 2%;
+  }
+}
+
+/* Desktop (1280px <= width < 1536px) */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .fc {
+    height: 75dvh;
+  }
+
+  .fc-toolbar-title {
+    font-size: 2rem !important;
+  }
+
+  .fc-button {
+    font-size: 1rem;
+  }
+
+  .fc-toolbar-ltr {
+    padding-inline: 1%;
+  }
+}
+
+/* Full HD (1536px and up) */
+@media (min-width: 1536px) {
+  .fc {
+    height: 80dvh;
+  }
+
+  .fc-toolbar-title {
+    font-size: 2.25rem !important;
+  }
+
+  .fc-button {
+    font-size: 1.1rem;
+  }
+
+  .fc-toolbar-ltr {
+    padding-inline: 1%;
+  }
+
+  .fc-daygrid-event {
+    font-size: 0.75rem !important;
+    height: 14px !important;
+  }
+}

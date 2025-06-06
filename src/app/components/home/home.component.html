@@ -1,0 +1,46 @@
+<!-- Header -->
+<div class=" lg:flex p-0 m-0 w-full h-screen">
+
+  <div class="w-[20%] p-0 m-0 border">
+
+    <app-menu></app-menu>
+
+  </div>
+
+  <div class="w-full px-2">
+
+    <app-header></app-header>
+
+    <div class="xl:flex w-full pt-2 gap-6 justify-center">
+
+      <app-calendar class="w-full mx-auto"></app-calendar>
+
+      <div class="rounded-2xl lg:text-white lg:bg-[#03157e]">
+
+        <div class="mt-2">
+
+          <span class="px-2 text-4xl">{{diaNumero}} </span>{{diaSemana}}
+
+        </div>
+
+        <div class="tareaInfo">
+
+          <a [routerLink]="['/eventos']" class="verMas">Ver todos los eventos</a>
+          <fa-icon class="text-green-600" [size]="'xl'" [icon]="faCalendarDays" [fixedWidth]="true"></fa-icon>
+          <span class="text-sm">Ver todos los eventos</span>
+
+        </div>
+
+        <div class="tareaInfo">
+
+          <a class="verMas" href="">Ver tareas</a>
+          <fa-icon class="text-orange-500" [size]="'xl'" [icon]="faListCheck" [fixedWidth]="true"></fa-icon>
+          <span class="text-sm">Te quedan 4 tareas por completar</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
