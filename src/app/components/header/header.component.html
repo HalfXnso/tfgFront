@@ -7,7 +7,6 @@
         <h1 class="text-3xl font-bold">¡Bienvenido de vuelta!</h1>
         <button (click)="openModal()" class="btn text-white mt-4 bg-green-500 hover:bg-green-400">
                     <fa-icon  [size]="'xl'" [icon]="faPlus" [fixedWidth]="true"></fa-icon>
-
           Nuevo
         </button>
       </div>
@@ -19,3 +18,53 @@
         </div>
       </div>
 </section>
+ <dialog id="createHome" class="modal">
+    <div class="modal-box">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute rounded right-3 top-2">✕</button>
+      </form>
+
+      <div class="flex items-center gap-4 my-4">
+        <h3 class="text-lg font-bold">Crear</h3>
+
+        <!-- Selección entre tarea y evento -->
+        <select [(ngModel)]="selectedOption" name="tipoObjeto" class="select w-40">
+          <option value="tarea">tarea</option>
+          <option value="evento">evento</option>
+        </select>
+      </div>
+      <!-- FORMULARIO PARA TAREA -->
+      <div *ngIf="selectedOption === 'tarea'">
+        <input class="input my-8" [(ngModel)]="tareaData.titulo" name="tituloTarea" placeholder="Título de tarea" />
+        <textarea class="input" [(ngModel)]="tareaData.descripcion" name="descTarea"
+          placeholder="Descripción"></textarea>
+        <select class="select w-full" [(ngModel)]="tareaData.estado" name="estadoTarea">
+          <option value="pendiente">Pendiente</option>
+          <option value="en progreso">En progreso</option>
+          <option value="completado">Completado</option>
+        </select>
+        <select class="select w-full" [(ngModel)]="tareaData.tipo" name="tipoTarea">
+          <option value="urgente">Urgente</option>
+          <option value="normal">Normal</option>
+          <option value="sin prisa">Sin prisa</option>
+        </select>
+        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea" />
+        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaFin" name="finTarea" />
+      </div>
+
+      <!-- FORMULARIO PARA EVENTO -->
+      <div *ngIf="selectedOption === 'evento'">
+        <input class="input" [(ngModel)]="eventoData.nombreEvento" name="nombreEvento"
+          placeholder="Nombre del evento" />
+        <textarea class="input" [(ngModel)]="eventoData.descripcion" name="descEvento"
+          placeholder="Descripción"></textarea>
+        <input type="datetime-local" class="input" [(ngModel)]="eventoData.fechaInicio" name="inicioEvento" />
+        <input type="datetime-local" class="input" [(ngModel)]="eventoData.fechaFin" name="finEvento" />
+      </div>
+
+      <form method="dialog">
+        <button class="btn bg-green-500 mt-4 w-full" (click)="create()">Crear</button>
+      </form>
+
+    </div>
+  </dialog>

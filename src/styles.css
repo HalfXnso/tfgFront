@@ -5,6 +5,10 @@
 body{
    font-family: "Rubik", sans-serif;
 }
+.fc-day-today {
+  background-color: #ebda89 !important; /* Tailwind yellow-300 */
+}
+
 .fc-daygrid-day {
   border: 1px solid #e5e7eb;
   /* Tailwind gray-200 */
@@ -15,6 +19,24 @@ body{
 .fc-daygrid-day-number {
   /* Tailwind text-sm */
   text-align: right;
+}
+
+.fc-event-main{
+  cursor: pointer;
+}
+
+.fc-event-main :hover{
+  background-color: #1d4ed8 !important;
+  /* Azul Tailwind */
+  color: white !important;
+  /* Texto blanco al pasar el cursor */
+}
+
+.fc-event-main :active{
+  background-color: #132e79 !important;
+  /* Azul Tailwind */
+  color: white !important;
+  /* Texto blanco al hacer clic */
 }
 
 /* Compactar eventos dentro del calendario */

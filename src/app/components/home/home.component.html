@@ -15,12 +15,36 @@
 
       <app-calendar class="w-full mx-auto"></app-calendar>
 
-      <div class="rounded-2xl lg:text-white lg:bg-[#03157e]">
+      <div class="rounded-2xl lg:text-white lg:w-60 lg:bg-[#2C3E50]">
 
         <div class="mt-2">
 
           <span class="px-2 text-4xl">{{diaNumero}} </span>{{diaSemana}}
 
+        </div>
+
+        <ng-container  *ngIf="tareas.length > 0">
+          <div *ngFor="let tarea of tareas" class="hidden text-center lg:block border m-4 lg:p-2">
+            <h3 class=" font-bold text-sm">{{ tarea.titulo }}</h3>
+
+            <span class="ml-2 text-xs" [ngClass]="{
+              'text-green-500': tarea.estado === 'completada',
+              'text-yellow-500': tarea.estado === 'pendiente',
+              'text-blue-500': tarea.estado === 'en progreso'
+            }">
+              {{ tarea.estado }}
+            </span>
+            <div class="flex justify-around items-center">
+              <span>Finaliza:</span>
+              <span class="">
+                {{ tarea.fechaFin | date:'shortDate' }}
+              </span>
+            </div>
+
+          </div>
+        </ng-container>
+        <div *ngIf="tareas?.length === 0" class="hidden lg:block text-gray-400 p-2">
+          No hay tareas para mostrar.
         </div>
 
         <div class="tareaInfo">
@@ -33,9 +57,9 @@
 
         <div class="tareaInfo">
 
-          <a class="verMas" href="">Ver tareas</a>
+          <a class="verMas"[routerLink]="['/tareas']">Ver tareas</a>
           <fa-icon class="text-orange-500" [size]="'xl'" [icon]="faListCheck" [fixedWidth]="true"></fa-icon>
-          <span class="text-sm">Te quedan 4 tareas por completar</span>
+          <span class="text-sm">Te quedan {{tareasCount}}  tareas por completar</span>
 
         </div>
 

@@ -32,3 +32,22 @@
     </ng-template>
   </div>
 </dialog>
+
+<dialog id="eventosSeleccionado_modal" class="modal">
+  <div class="modal-box">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute rounded right-3 top-2">✕</button>
+    </form>
+    <div>
+      <h1 class="text-xl font-bold">{{eventoSeleccionado?.nombreEvento}} </h1>
+      <p class="text-gray-500">{{eventoSeleccionado?.descripcion}}</p>
+      <p class="text-sm text-gray-500">
+        {{eventoSeleccionado?.fechaInicio | date: 'short'}} - {{eventoSeleccionado?.fechaFin | date: 'short'}}
+      </p>
+      <form method="dialog" class="mt-4">
+        <button (click)="borrarEvento()" class="btn btn-error">Eliminar Evento</button>
+        <button (click)="guardarCambios()" class="btn btn-primary ml-2">Editar Evento</button>
+      </form>
+    </div>
+  </div>
+</dialog>

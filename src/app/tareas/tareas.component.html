@@ -30,19 +30,24 @@
         <input type="search" required placeholder="Search" />
       </label>
     </div>
-    <div
+    <div style="scrollbar-width: none;"
       class="flex lg:hidden px-4 mt-6 overflow-x-scroll sm:justify-around sm:overflow-hidden gap-4 relative mask-gradient-fade">
 
-      <div class="badge badge-outline rounded-full bg-blue-300 font-semibold text-nowrap p-4"><a href="">En curso</a>
-      </div>
-      <button (click)="obtenerTareasFinalizadas()" class=" badge badge-outline rounded-full bg-blue-300 font-semibold p-4">Vencidas</button>
-      <div class="badge badge-outline rounded-full bg-blue-300 font-semibold p-4"><a href="">Completadas</a></div>
+      <button (click)="obtenerTareasNoFinalizadas()"
+        class="badge badge-outline rounded-full bg-blue-300 font-semibold text-nowrap p-4">En curso
+      </button>
+      <button (click)="obtenerTareasFinalizadas()"
+        class=" badge badge-outline rounded-full bg-blue-300 font-semibold p-4">Vencidas</button>
+      <button (click)="obtenerTareasCompletadas()"
+        class="badge badge-outline rounded-full bg-blue-300 font-semibold p-4">Completadas</button>
       <div class="badge badge-outline rounded-full bg-blue-300 font-semibold p-4"><a href="">Listas</a></div>
 
     </div>
 
-    <div class="mt-4 overflow-y-scroll h-[62dvh] mx-4">
-
+    <div class="mt-4 overflow-y-scroll  h-[62dvh] mx-4" style="scrollbar-width: none;">
+      <div *ngIf="tareas.length === 0" class="text-center mt-4 text-gray-500">
+        <p>No hay tareas disponibles.</p>
+      </div>
       <div class="collapse collapse-arrow mt-4  bg-base-100 border border-gray-300" *ngFor="let tarea of tareas">
         <input type="checkbox" />
         <div class="collapse-title flex gap-4 items-center">
@@ -66,15 +71,16 @@
           <div>
             {{tarea.estado}}
           </div>
-          <div id="actions" class="flex w-full justify-around">
-            <div class=" w-full">
+          <div [ngClass]="{
+                'hidden': tarea.estado === 'completado'}" id="actions" class="flex w-full justify-around">
+            <button (click)="completarTarea(tarea.id)" class=" w-full">
 
               <fa-icon class="border rounded  w-full p-2 btn bg-green-500 text-white" [ngClass]="{
                 'hidden': tarea.estado === 'finalizado'}" [border]="false" [size]="'lg'" [icon]="faCheck"
                 [fixedWidth]="true">
               </fa-icon>
 
-            </div>
+            </button>
 
             <div class=" w-full">
 
@@ -84,13 +90,13 @@
 
             </div>
 
-            <div class=" w-full">
+            <button (click)="borrarTarea(tarea.id)" class=" w-full">
 
               <fa-icon class="border rounded   w-full p-2 btn bg-red-500 text-white" [border]="false" [size]="'lg'"
                 [icon]="faTrash" [fixedWidth]="true">
               </fa-icon>
 
-            </div>
+            </button>
 
           </div>
 
@@ -99,6 +105,7 @@
       </div>
 
     </div>
+
   </section>
   <div class="absolute left-1/2 bottom-60 transform -translate-x-1/2 z-50 flex justify-center">
 

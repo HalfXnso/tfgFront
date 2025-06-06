@@ -6,6 +6,7 @@ import { TareasService } from '../services/tareas.service';
 import { NgFor, CommonModule } from '@angular/common';
 import { MenuComponent } from "../components/menu/menu.component";
 import { HeaderComponent } from "../components/header/header.component";
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-tareas',
   imports: [FontAwesomeModule, NgFor, MenuComponent, HeaderComponent, CommonModule],
@@ -34,7 +35,7 @@ tareasNoFinalziadas: any[] = []
 
   ngOnInit(): void {
 
-    this.obtenerEventosNoFinalizados();
+    this.obtenerTareasNoFinalizadas();
 
   }
 
@@ -64,14 +65,31 @@ tareasNoFinalziadas: any[] = []
     });
   }
 
-  obtenerEventosNoFinalizados() {
-    this.obtenerTareas();
-    // Filtra las tareas que no están finalizadas y las "pinta" (puedes adaptar la lógica de pintado según tu vista)
-    const eventosNoFinalizados = this.tareas.filter((tarea: any) => tarea.estado !== 'finalizado');
-    console.log('Eventos no finalizados:', eventosNoFinalizados);
-    // Aquí puedes asignar a una variable para mostrar en la vista si lo necesitas
-    // this.eventosNoFinalizados = eventosNoFinalizados;
-    this.tareas = eventosNoFinalizados;
+  obtenerTareasNoFinalizadas() {
+    this.tareaService.getTareas().subscribe((response: any) => {
+      const tareas = response.tareas ? response.tareas : response;
+      // Actualiza el estado de las tareas finalizadas si es necesario
+      tareas.forEach((tarea: any) => {
+        if (tarea.fechaFin && new Date(tarea.fechaFin) < new Date()) {
+          if (tarea.estado !== 'finalizado') {
+            const cambios = { estado: 'finalizado' };
+            this.tareaService.updateTarea(tarea.id, cambios).subscribe({
+              next: (res) => {
+                tarea.estado = 'finalizado';
+                console.log(`Tarea ${tarea.id} actualizada a finalizado`);
+              },
+              error: (err) => {
+                console.error(`Error actualizando tarea ${tarea.id}`, err);
+              }
+            });
+          }
+        }
+      });
+      // Filtra las tareas que no están finalizadas
+      const eventosNoFinalizados = tareas.filter((tarea: any) => (tarea.estado !== 'finalizado') && (tarea.estado !== 'completado'));
+      console.log('Eventos no finalizados:', eventosNoFinalizados);
+      this.tareas = eventosNoFinalizados;
+    });
   }
 
  getFormattedFechaInicio(fecha: string): string {
@@ -82,13 +100,64 @@ tareasNoFinalziadas: any[] = []
   }
 
 
-
-
+borrarTarea(id: number) {
+    this.tareaService.deleteTarea(id).subscribe({
+      next: () => {
+        // console.log(`Tarea ${id} eliminada`);
+        // Usar SweetAlert2 para mostrar la alerta
+        // @ts-ignore
+        Swal.fire({
+          icon: 'success',
+          title: 'Tarea eliminada',
+          text: `Tarea ${id} eliminada correctamente`
+        });
+        this.obtenerTareasNoFinalizadas(); // Actualizar la lista de tareas después de eliminar
+      },
+      error: (err) => {
+        // @ts-ignore
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al eliminar tarea',
+          text: `Error al eliminar tarea ${id}: ${err?.message || err}`
+        });
+      }
+    });
+  }
   obtenerTareasFinalizadas() {
     this.tareaService.getTareas().subscribe((response: any) => {
       let tareas = response.tareas ? response.tareas : response;
       this.tareas = tareas.filter((tarea: any) => tarea.estado === 'finalizado');
       console.log(this.tareas);
+    });
+  }
+
+  obtenerTareasCompletadas() {
+    this.tareaService.getTareas().subscribe((response: any) => {
+      let tareas = response.tareas ? response.tareas : response;
+      this.tareas = tareas.filter((tarea: any) => tarea.estado === 'completado');
+    });
+  }
+
+  completarTarea(id: number) {
+    const cambios = { estado: 'completado' };
+    this.tareaService.updateTarea(id, cambios).subscribe({
+      next: () => {
+      // @ts-ignore
+      Swal.fire({
+        icon: 'success',
+        title: 'Tarea completada',
+        text: 'Tarea completada'
+      });
+      this.obtenerTareasNoFinalizadas();
+      },
+      error: (err) => {
+      // @ts-ignore
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al completar tarea',
+        text: `Error al completar tarea ${id}: ${err?.message || err}`
+      });
+      }
     });
   }
 }

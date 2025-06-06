@@ -33,4 +33,11 @@ export class TareasService {
   deleteTarea(id: number): Observable<any> {
     return this.http.delete<any>(`${this.url}/${id}`);
   }
+
+  getTareasPorRangoFechas(fechaInicio: string, fechaFin: string): Observable<Tarea[]> {
+    const params = new HttpParams()
+      .set('fechaInicio', fechaInicio)
+      .set('fechaFin', fechaFin);
+    return this.http.get<Tarea[]>(`${this.url}/rango-fechas`, { params });
+  }
 }

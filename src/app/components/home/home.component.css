@@ -25,5 +25,10 @@
       align-items: center;
       gap: 0.5rem;
       position: relative;
+    }
 
+    @media (min-width: 1024px) {
+      .tareaInfo {
+        display: none;
+      }
     }

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { EventosService } from '../../services/eventos.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
@@ -54,8 +55,11 @@ export class CalendarComponent implements OnInit {
       month: 'Vista mensual',
       multiMonthYear: 'Vista anual',
     },
+    eventClick: (info) => {
+      this.handleEventClick(info);
+    },
 
-    dayMaxEvents: 1,
+    dayMaxEvents: 2,
     events: this.eventos,
     eventOrder: 'duration',
     dateClick: (arg) => this.handleDateClick(arg),
@@ -63,9 +67,10 @@ export class CalendarComponent implements OnInit {
     // Configuración para marcar días con eventos
     dayCellDidMount: (arg) => this.marcarDiasConEventos(arg),
     eventDidMount: (info) => {
+
       // Respaldo para asegurar que eventos de un día se marquen
       const dayNumberEl = info.el.closest('.fc-daygrid-day')?.querySelector('.fc-daygrid-day-number');
-      if (dayNumberEl) {
+      if (dayNumberEl && window.innerWidth < 1024) {
         dayNumberEl.classList.add('dia-con-evento');
       }
     },
@@ -86,22 +91,41 @@ export class CalendarComponent implements OnInit {
     ]
   };
 
+
+  handleEventClick(info: any) {
+
+    this.selectedId = info.event.id;
+    this.obtenerEventosById(this.selectedId);
+
+    // Ajustar la fecha de inicio y fin para que coincida con la zona horaria local
+    this.eventoSeleccionado.fechaInicio = this.getFormattedFechaInicio(info.event.start);
+    this.eventoSeleccionado.fechaFin = this.getFormattedFechaInicio(info.event.end || info.event.start);
+const modal: any = document.getElementById('eventosSeleccionado_modal');
+      if (modal) {
+        modal.showModal();
+      }
+    console.log('Evento seleccionado:', this.eventoSeleccionado);
+  }
+
   handleDateClick(arg: DateClickArg) {
-    const clickedDate = new Date(arg.dateStr);
-    clickedDate.setHours(0, 0, 0, 0);
+    if (window.innerWidth < 1024) {
+      const clickedDate = new Date(arg.dateStr);
+      clickedDate.setHours(0, 0, 0, 0);
 
-    this.eventosDelDia = this.eventos.filter((evento) => {
-      const start = new Date(evento.start);
-      const end = evento.end ? new Date(evento.end) : new Date(evento.start);
+      this.eventosDelDia = this.eventos.filter((evento) => {
+        const start = new Date(evento.start);
+        const end = evento.end ? new Date(evento.end) : new Date(evento.start);
 
-      return clickedDate >= this.soloFecha(start) && clickedDate <= this.soloFecha(end);
-    });
+        return clickedDate >= this.soloFecha(start) && clickedDate <= this.soloFecha(end);
+      });
 
-    console.log('Eventos del día:', this.eventosDelDia);
 
-    const modal: any = document.getElementById('eventos_modal');
-    if (modal) {
-      modal.showModal();
+      console.log('Eventos del día:', this.eventosDelDia);
+
+      const modal: any = document.getElementById('eventos_modal');
+      if (modal) {
+        modal.showModal();
+      }
     }
   }
 
@@ -140,22 +164,22 @@ export class CalendarComponent implements OnInit {
 
 
   obtenerEventos() {
-  this.eventService.getEventos().subscribe((eventos: any[]) => {
-    this.eventos = eventos.map((evento) => ({
-      id: evento.id,
-      title: evento.nombreEvento || '',
-      descripcion: evento.descripcion,
-      start: evento.fechaInicio ? new Date(evento.fechaInicio) : new Date(),
-      end: evento.fechaFin ? new Date(evento.fechaFin) : new Date(),
-      usuarios: evento.usuarios || [],
-    }));
+    this.eventService.getEventos().subscribe((eventos: any[]) => {
+      this.eventos = eventos.map((evento) => ({
+        id: evento.id,
+        title: evento.nombreEvento || '',
+        descripcion: evento.descripcion,
+        start: evento.fechaInicio ? new Date(evento.fechaInicio) : new Date(),
+        end: evento.fechaFin ? new Date(evento.fechaFin) : new Date(),
+        usuarios: evento.usuarios || [],
+      }));
 
-    this.calendarOptions = {
-      ...this.calendarOptions,
-      events: this.eventos, 
-    };
-  });
-}
+      this.calendarOptions = {
+        ...this.calendarOptions,
+        events: this.eventos,
+      };
+    });
+  }
 
 
   obtenerEventosById(id: number) {
@@ -176,16 +200,26 @@ export class CalendarComponent implements OnInit {
   }
 
   borrarEvento() {
-    this.eventService.deleteEvento(this.selectedId).subscribe(
-      (respuesta) => {
-        console.log('Evento eliminado:', respuesta);
+    this.eventService.deleteEvento(this.selectedId).subscribe({
+      next: () => {
+        // Mostrar alerta con SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: 'Evento eliminado',
+          text: 'El evento ha sido eliminado correctamente.',
+          timer: 2000,
+          showConfirmButton: false
+        });
         this.obtenerEventos(); // recargar eventos en el calendario
-        this.cerrarModal(); // cerrar modal
+        const modal: any = document.getElementById('eventos_modal');
+        if (modal) {
+          modal.close();
+        }
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al eliminar el evento:', error);
       }
-    );
+    });
   }
 
   guardarCambios() {
@@ -216,7 +250,7 @@ export class CalendarComponent implements OnInit {
     return date.toISOString().substring(0, 16).replace('T', ' '); // Formatear la fecha y hora
   }
 
-   reconocimientoVoz() {
+  reconocimientoVoz() {
     const recognition = new (window as any).webkitSpeechRecognition();
     recognition.lang = 'es-ES';
     recognition.interimResults = false;

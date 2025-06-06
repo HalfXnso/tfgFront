@@ -8,15 +8,19 @@ import { CalendarComponent } from "../calendar/calendar.component";
 import { RouterLink } from '@angular/router';
 import { MenuComponent } from "../menu/menu.component";
 import { HeaderComponent } from "../header/header.component";
+import { TareasService } from '../../services/tareas.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [FontAwesomeModule, CalendarComponent, RouterLink, MenuComponent, HeaderComponent],
+  imports: [FontAwesomeModule, CalendarComponent, RouterLink, MenuComponent, HeaderComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+  tareasCount: number = 0;
+  tareas: any[] = [];
   faSquarePlus = faSquarePlus;
   faPlus = faPlus;
   faListCheck = faListCheck;
@@ -29,10 +33,11 @@ export class HomeComponent implements OnInit {
   diaSemana: string = '';
   diaNumero: string = '';
 
-  constructor(private eventService: EventosService) { }
+  constructor(private tareaService: TareasService) { }
 
   ngOnInit(): void {
     this.obtenerFechaFormateada();
+    this.getTareasToday();
 
   }
 
@@ -49,6 +54,59 @@ export class HomeComponent implements OnInit {
     this.diaSemana = partes.find(part => part.type === 'weekday')?.value ?? '';
 
   }
+
+  getTareasCount(): number {
+    this.tareaService.getTareas
+    this.tareasCount = this.tareas.filter(
+      tarea => {
+      const estado = tarea.estado?.toLowerCase();
+      return estado !== 'completado' && estado !== 'finalizado';
+      }
+    ).length;
+    return this.tareasCount;
+  }
+
+  getTareasToday(){
+
+    this.tareaService.getTareas().subscribe({
+
+      next: (response) => {
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+
+      const tareasFiltradas = response.filter((tarea: any) => {
+        const estado = tarea.estado?.toLowerCase();
+        if (estado === 'completado' || estado === 'finalizado') return false;
+
+        const fechaInicio = new Date(tarea.fechaInicio);
+        const fechaFin = new Date(tarea.fechaFin);
+        fechaInicio.setHours(0, 0, 0, 0);
+        fechaFin.setHours(0, 0, 0, 0);
+
+        // hoy >= fechaInicio && hoy <= fechaFin
+        return hoy >= fechaInicio && hoy <= fechaFin;
+      }).sort((a: any, b: any) => {
+        const hoyStr = hoy.toISOString().slice(0, 10);
+        const aFin = a.fechaFin.slice(0, 10);
+        const bFin = b.fechaFin.slice(0, 10);
+
+        // Las que finalizan hoy primero
+        if (aFin === hoyStr && bFin !== hoyStr) return -1;
+        if (aFin !== hoyStr && bFin === hoyStr) return 1;
+        // Si ambos o ninguno finalizan hoy, ordenar por fechaFin ascendente
+        return new Date(a.fechaFin).getTime() - new Date(b.fechaFin).getTime();
+      });
+      this.tareas = tareasFiltradas;
+      this.getTareasCount();
+      console.log('Tareas filtradas del día:', tareasFiltradas);
+      },
+      error: (error) => {
+      console.error('Error al obtener las tareas del día:', error);
+      }
+    });
+
+  }
+
 
 
 }
