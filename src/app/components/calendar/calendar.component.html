@@ -6,7 +6,7 @@
 
   <button (click)="reconocimientoVoz()"
     class="flex items-center justify-center w-14 h-14 rounded-full border-4  border-gray-400 bg-white shadow-lg">
-    <fa-icon [border]="false" [size]="'2x'" [icon]="faMicrophone" [fixedWidth]="true"></fa-icon>
+    <fa-icon [border]="false" class="text-[#2C3E50]" [size]="'2x'" [icon]="faMicrophone" [fixedWidth]="true"></fa-icon>
   </button>
 </div>
 
@@ -18,13 +18,18 @@
     <h3 class="text-lg font-bold">Eventos del día</h3>
     <div *ngIf="eventosDelDia.length > 0; else sinEventos">
       <ul class="py-2 space-y-2">
-        <li *ngFor="let evento of eventosDelDia" class="border p-2 my-4 rounded bg-base-100 shadow">
+        <li *ngFor="let evento of eventosDelDia" class="border p-2 my-4 flex flex-col  rounded bg-base-100 shadow">
           <div class="font-semibold">{{ evento.title }}</div>
           <div class="text-sm text-gray-500">
             {{ evento.start | date: 'short' }} - {{ evento.end | date: 'short' }}
           </div>
           <div class="text-sm mt-1">{{ evento.descripcion }}</div>
+            <form method="dialog" class="flex justify-center mt-2 space-x-2">
+            <button (click)="borrarEventoPorId(evento.id)" class="btn btn-error btn-sm">Eliminar</button>
+            <button (click)="guardarCambios()" class="btn btn-primary btn-sm">Editar</button>
+            </form>
         </li>
+
       </ul>
     </div>
     <ng-template #sinEventos>

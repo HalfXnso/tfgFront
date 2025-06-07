@@ -222,6 +222,32 @@ const modal: any = document.getElementById('eventosSeleccionado_modal');
     });
   }
 
+  borrarEventoPorId(id: number) {
+    this.eventService.deleteEvento(id).subscribe({
+      next: () => {
+        // Mostrar alerta con SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: 'Evento eliminado',
+          text: 'El evento ha sido eliminado correctamente.',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          // Recargar la página después de que se cierre el Swal
+          window.location.reload();
+        });
+
+        const modal: any = document.getElementById('eventos_modal');
+        if (modal) {
+          modal.close();
+        }
+      },
+      error: (error) => {
+        console.error('Error al eliminar el evento:', error);
+      }
+    });
+  }
+
   guardarCambios() {
     // Convertimos los campos de fecha a objetos Date si vienen como string
     this.eventoSeleccionado.fechaInicio = new Date(

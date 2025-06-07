@@ -1,32 +1,64 @@
-<section class="absolute lg:relative lg:bg-[#2C3E50] lg:text-white font-bold w-full lg:h-full bottom-0">
-  <div class="flex lg:flex-col lg:gap-8 items-center  lg:items-center border-t justify-between px-8 pt-3">
+<section class="absolute lg:relative lg:bg-[#2C3E50] lg:text-white  w-full lg:h-full bottom-0">
+  <div class="flex   items-center   border-t justify-between px-8 pt-3">
 
-    <div class="hidden lg:flex flex-col h-20 mt-6 gap-2 items-center">
-      <img src="./logo.png" alt="logo" class="w-full h-full object-cover" />
-      <h1 class="font-bold">Organisapp</h1>
-    </div>
-    <div class="relative  flex flex-col items-center">
+
+    <div class="relative lg:hidden flex flex-col items-center">
 
       <div
         class="absolute left-9.5 border rounded-full text-[12px] flex items-center text-black justify-center bg-blue-300 font-semibold -top-1 h-4 w-4">
         3</div>
       <a [routerLink]="['/tareas']">
-        <fa-icon [size]="'2x'" [icon]="faListUl" [fixedWidth]="true"></fa-icon>
+        <fa-icon [size]="'2x'" [icon]="faListUl" class=" text-[#2C3E50]" [fixedWidth]="true"></fa-icon>
       </a>
       <small>Tareas</small>
     </div>
-    <div [ngClass]="{ 'deshabilitado': disabled === 'home' }" class="flex flex-col items-center ">
+    <div [ngClass]="{ 'hidden': disabled === 'home' }" class="flex text-[#2C3E50] flex-col items-center ">
       <a [routerLink]="['/home']">
         <fa-icon [size]="'2x'" [icon]="faHome " [fixedWidth]="true"></fa-icon>
       </a>
       <small>Inicio</small>
     </div>
-    <button (click)="openModal()" class="flex deshabilitado-h flex-col items-center">
+    <button (click)="openModal()" class="flex  text-[#2C3E50] deshabilitado-h flex-col items-center">
       <fa-icon [size]="'2x'" [icon]="faSquarePlus " [fixedWidth]="true"></fa-icon>
       <small>Nuevo</small>
     </button>
   </div>
+  <div class="w-full h-11/12 hidden text-[18px] text-gray-300 lg:block ">
+    <div class="hidden lg:flex flex-col text-white bg-[#34495E]  gap-3 items-center rounded-lg shadow-lg p-4">
+      <div class="h-14 w-14 rounded-full bg-white shadow-md flex items-center justify-center">
+        <img src="./logo-removebg-preview.png" alt="Organisapp Logo" class="h-10 w-10 object-contain" />
+      </div>
+      <h1 class="font-bold text-lg tracking-wide">Organisapp</h1>
+    </div>
+    <ul class="h-9/12 flex flex-col  justify-between py-4 mt-4">
+      <li class="py-2 flex gap-4   px-4 hover:bg-[#1b2631] rounded cursor-pointer">
+       <fa-icon [size]="'lg'" [icon]="faHome" [fixedWidth]="true"></fa-icon> Inicio
+      </li>
+      <li class="py-2 px-4">
+        <span class="font-bold">Mis tareas</span>
+        <ul class="ml-4 flex flex-col gap-4 mt-2">
 
+          <li class="py-1 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer">
+            <fa-icon [size]="'lg'" [icon]="faClock" class="text-yellow-500" [fixedWidth]="true"></fa-icon>
+            En progreso
+          </li>
+          <li class="py-1 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"><fa-icon [size]="'lg'" class="text-green-500" [icon]="faAward" [fixedWidth]="true"></fa-icon>Completadas</li>
+
+          <li class="py-1 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"><fa-icon [size]="'lg'" [icon]="faUncompleted" class="text-red-500" [fixedWidth]="true"></fa-icon>Vencidas</li>
+        </ul>
+      </li>
+      <li class="py-2 px-4">
+     <span class="font-bold">Eventos</span>
+        <ul class="ml-4 mt-2">
+          <li class="py-1  hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"> <fa-icon [size]="'lg'" [icon]="faCalendarDays" [fixedWidth]="true"></fa-icon> Todos los eventos</li>
+        </ul>
+      </li>
+      <li class="py-2 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer">
+       <fa-icon [size]="'lg'" [icon]="faExit" [fixedWidth]="true"></fa-icon> Cerrar sesión
+      </li>
+    </ul>
+
+  </div>
   <dialog id="create" class="modal">
     <div class="modal-box">
       <form method="dialog">
@@ -43,9 +75,9 @@
         </select>
       </div>
       <!-- FORMULARIO PARA TAREA -->
-      <div *ngIf="selectedOption === 'tarea'">
+      <div class="flex flex-col gap-4" *ngIf="selectedOption === 'tarea'">
         <input class="input" [(ngModel)]="tareaData.titulo" name="tituloTarea" placeholder="Título de tarea" />
-        <textarea class="input" [(ngModel)]="tareaData.descripcion" name="descTarea"
+        <textarea class="input  h-24" [(ngModel)]="tareaData.descripcion" name="descTarea"
           placeholder="Descripción"></textarea>
         <select class="select w-full" [(ngModel)]="tareaData.estado" name="estadoTarea">
           <option value="pendiente">Pendiente</option>
@@ -63,12 +95,12 @@
 
       <!-- FORMULARIO PARA EVENTO -->
       <div *ngIf="selectedOption === 'evento'">
-        <input class="input" [(ngModel)]="eventoData.nombreEvento" name="nombreEvento"
+        <input class="input  w-full my-4" [(ngModel)]="eventoData.nombreEvento" name="nombreEvento"
           placeholder="Nombre del evento" />
-        <textarea class="input" [(ngModel)]="eventoData.descripcion" name="descEvento"
+        <textarea class="input w-full my-4 h-24" [(ngModel)]="eventoData.descripcion" name="descEvento"
           placeholder="Descripción"></textarea>
-        <input type="datetime-local" class="input" [(ngModel)]="eventoData.fechaInicio" name="inicioEvento" />
-        <input type="datetime-local" class="input" [(ngModel)]="eventoData.fechaFin" name="finEvento" />
+        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaInicio" name="inicioEvento" />
+        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaFin" name="finEvento" />
       </div>
 
       <form method="dialog">

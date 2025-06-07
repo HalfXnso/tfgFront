@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { faBell, faCalendarDays, faCalendarPlus, faCircle, faHome, faListCheck, faListUl, faMicrophone, faPencil, faPlus, faSearch, faSquarePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faAward, faBell, faCalendarDay, faCalendarDays, faCalendarPlus, faCircle, faClock, faHome, faListCheck, faListUl, faMicrophone, faPencil, faPlus, faRectangleXmark, faRightFromBracket, faSearch, faSquarePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-menu',
@@ -31,10 +31,15 @@ export class MenuComponent implements OnInit {
   faSearch = faSearch;
   faBell = faBell;
   faListUl = faListUl;
+  faAward = faAward
+  faUncompleted = faRectangleXmark
   faCalendarPlus = faCalendarPlus;
   faCalendarDays = faCalendarDays;
+    faCalendarDay = faCalendarDay;
   faMicrophone = faMicrophone;
   faSquarePlus = faSquarePlus;
+  faClock = faClock;
+  faExit = faRightFromBracket
   selectedOption: 'tarea' | 'evento' = 'tarea';
 
   tareaData: Tarea = {
@@ -56,7 +61,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     const urlParts = window.location.pathname.split('/');
     this.disabled = urlParts[urlParts.length - 1] || '';
-  
+
   }
 
   openModal() {
