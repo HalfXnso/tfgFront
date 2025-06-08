@@ -19,7 +19,7 @@ import { faAward, faBell, faCalendarDay, faCalendarDays, faCalendarPlus, faCircl
 export class MenuComponent implements OnInit {
 
   constructor(private eventoService: EventosService, private tareaService: TareasService) { }
-
+  tareasCount: number = 0;
   eventoCreate?: Evento;
   tareaCreate?: Tarea;
   disabled: string = '';
@@ -41,6 +41,7 @@ export class MenuComponent implements OnInit {
   faClock = faClock;
   faExit = faRightFromBracket
   selectedOption: 'tarea' | 'evento' = 'tarea';
+  tareas: any[] = [];
 
   tareaData: Tarea = {
     titulo: '',
@@ -101,5 +102,17 @@ export class MenuComponent implements OnInit {
         error: (err) => Swal.fire('Error', err.message, 'error')
       });
     }
+  }
+
+
+   getTareasCount(): number {
+    this.tareaService.getTareas
+    this.tareasCount = this.tareas.filter(
+      tarea => {
+      const estado = tarea.estado?.toLowerCase();
+      return estado !== 'completado' && estado !== 'finalizado';
+      }
+    ).length;
+    return this.tareasCount;
   }
 }
