@@ -93,11 +93,15 @@
           <option value="normal">Normal</option>
           <option value="sin prisa">Sin prisa</option>
         </select>
-        <label for="finTarea" class="block text-gray-500 text-sm mb-1">Fecha de fin</label>
-        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea"
-          placeholder="Fecha de inicio" />
-        <label for="finTarea" class="block text-gray-500 text-sm mb-1">Fecha de fin</label>
-        <input id="finTarea" type="datetime-local" class="input" [(ngModel)]="tareaData.fechaFin" name="finTarea" />
+        <div>
+          <label for="inicioTarea" class="block text-gray-500 text-[12px] ml-1">Fecha de inicio de la tarea</label>
+          <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea"
+            placeholder="Fecha de inicio" />
+        </div>
+        <div>
+          <label for="finTarea" class="block text-gray-500 text-[12px] ml-1">Fecha de fin de la tarea</label>
+          <input id="finTarea" type="datetime-local" class="input" [(ngModel)]="tareaData.fechaFin" name="finTarea" />
+        </div>
       </div>
 
       <!-- FORMULARIO PARA EVENTO -->
@@ -106,10 +110,16 @@
           placeholder="Nombre del evento" />
         <textarea class="input w-full my-4 h-24" [(ngModel)]="eventoData.descripcion" name="descEvento"
           placeholder="Descripción"></textarea>
-        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaInicio"
-          placeholder="Fecha de inicio" name="inicioEvento" />
-        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaFin"
-          placeholder="Fecha de fin" name="finEvento" />
+        <div>
+          <label for="inicioEvento" class="block text-gray-500 text-[12px] ml-1">Fecha de inicio del evento</label>
+          <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaInicio"
+            placeholder="Fecha de inicio" name="inicioEvento" />
+        </div>
+        <div>
+          <label for="finEvento" class="block text-gray-500 text-[12px] ml-1">Fecha de inicio del evento</label>
+          <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaFin"
+            placeholder="Fecha de fin" name="finEvento" />
+        </div>
       </div>
 
       <form method="dialog">

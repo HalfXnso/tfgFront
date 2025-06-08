@@ -18,7 +18,7 @@
         </div>
       </div>
 </section>
- <dialog id="createHome" class="modal">
+<dialog id="createHome" class="modal">
     <div class="modal-box">
       <form method="dialog">
         <button class="btn btn-sm btn-circle btn-ghost absolute rounded right-3 top-2">✕</button>
@@ -34,32 +34,48 @@
         </select>
       </div>
       <!-- FORMULARIO PARA TAREA -->
-      <div *ngIf="selectedOption === 'tarea'">
-        <input class="input w-full my-4" [(ngModel)]="tareaData.titulo" name="tituloTarea" placeholder="Título de tarea" />
-        <textarea class="input w-full my-4 h-32" [(ngModel)]="tareaData.descripcion" name="descTarea"
+      <div class="flex flex-col gap-4" *ngIf="selectedOption === 'tarea'">
+        <input class="input w-full" [(ngModel)]="tareaData.titulo" name="tituloTarea" placeholder="Título de tarea" />
+        <textarea class="input w-full  h-24" [(ngModel)]="tareaData.descripcion" name="descTarea"
           placeholder="Descripción"></textarea>
-        <select class="select w-full  my-4" [(ngModel)]="tareaData.estado" name="estadoTarea">
+        <select class="select w-full" [(ngModel)]="tareaData.estado" name="estadoTarea">
+          <option disabled selected value="">Selecciona el estado de la tarea</option>
           <option value="pendiente">Pendiente</option>
           <option value="en progreso">En progreso</option>
-          <option value="completado">Completado</option>
         </select>
-        <select class="select w-full  my-4" [(ngModel)]="tareaData.tipo" name="tipoTarea">
+        <select class="select w-full" [(ngModel)]="tareaData.tipo" name="tipoTarea">
+          <option disabled selected value="">Selecciona la prioridad de la tarea </option>
           <option value="urgente">Urgente</option>
           <option value="normal">Normal</option>
           <option value="sin prisa">Sin prisa</option>
         </select>
-        <input type="datetime-local" class="input  my-4" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea" />
-        <input type="datetime-local" class="input  my-4" [(ngModel)]="tareaData.fechaFin" name="finTarea" />
+        <div>
+          <label for="inicioTarea" class="block text-gray-500 text-[12px] ml-1">Fecha de inicio de la tarea</label>
+          <input type="datetime-local" class="input w-full" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea"
+            placeholder="Fecha de inicio" />
+        </div>
+        <div>
+          <label for="finTarea" class="block text-gray-500 text-[12px] ml-1">Fecha de fin de la tarea</label>
+          <input id="finTarea" type="datetime-local" class="input w-full" [(ngModel)]="tareaData.fechaFin" name="finTarea" />
+        </div>
       </div>
 
       <!-- FORMULARIO PARA EVENTO -->
       <div *ngIf="selectedOption === 'evento'">
-        <input class="input w-full my-4" [(ngModel)]="eventoData.nombreEvento" name="nombreEvento"
+        <input class="input  w-full my-4" [(ngModel)]="eventoData.nombreEvento" name="nombreEvento"
           placeholder="Nombre del evento" />
-        <textarea class="input w-full my-4  h-32" [(ngModel)]="eventoData.descripcion" name="descEvento"
+        <textarea class="input w-full my-4 h-24" [(ngModel)]="eventoData.descripcion" name="descEvento"
           placeholder="Descripción"></textarea>
-        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaInicio" name="inicioEvento" />
-        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaFin" name="finEvento" />
+        <div class="my-4">
+          <label for="inicioEvento" class="block text-gray-500 text-[12px] ml-1">Fecha de inicio del evento</label>
+          <input type="datetime-local" class="input w-full" [(ngModel)]="eventoData.fechaInicio"
+            placeholder="Fecha de inicio" name="inicioEvento" />
+        </div>
+        <div class="my-4">
+          <label for="finEvento" class="block text-gray-500 text-[12px] ml-1">Fecha de inicio del evento</label>
+          <input type="datetime-local" class="input w-full" [(ngModel)]="eventoData.fechaFin"
+            placeholder="Fecha de fin" name="finEvento" />
+        </div>
       </div>
 
       <form method="dialog">
