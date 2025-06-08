@@ -42,14 +42,7 @@ export class EventosService {
     return this.http.delete<any>(`${this.url}/${id}`);
   }
 
-asistenteDialogflow(texto: string): Observable<any> {
-  const payload = {
-    queryResult: {
-      queryText: texto
-    }
-  };
-
-  return this.http.post<any>(`${this.url}/asistente/dialogflow`, payload);
-}
-
+  asistenteComando(texto: string): Observable<{ respuesta: string }> {
+    return this.http.post<{ respuesta: string }>(`${this.url}/asistente/comando`, { texto });
+  }
 }
