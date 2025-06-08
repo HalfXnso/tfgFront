@@ -292,7 +292,7 @@ const modal: any = document.getElementById('eventosSeleccionado_modal');
   }
 
   enviarComando(texto: string) {
-    this.eventService.asistenteComando(texto).subscribe(({ respuesta }) => {
+    this.eventService.asistenteDialogflow(texto).subscribe(({ respuesta }) => {
       console.log('Respuesta asistente:', respuesta);
       this.sintetizarVoz(respuesta);
     });
