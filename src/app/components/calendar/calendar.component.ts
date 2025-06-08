@@ -293,7 +293,7 @@ const modal: any = document.getElementById('eventosSeleccionado_modal');
 
   enviarComando(texto: string) {
     this.eventService.asistenteComando(texto).subscribe(({ respuesta }) => {
-      console.log('Respuesta asistente:', respuesta);
+      console.log('Respuesta asistentessss:', respuesta);
       this.sintetizarVoz(respuesta);
     });
   }
