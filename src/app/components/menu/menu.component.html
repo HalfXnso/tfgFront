@@ -32,7 +32,7 @@
     </div>
     <ul class="h-9/12 flex flex-col  justify-between py-4 mt-4">
       <li class="py-2 flex gap-4   px-4 hover:bg-[#1b2631] rounded cursor-pointer">
-       <fa-icon [size]="'lg'" [icon]="faHome" [fixedWidth]="true"></fa-icon> Inicio
+        <fa-icon [size]="'lg'" [icon]="faHome" [fixedWidth]="true"></fa-icon> Inicio
       </li>
       <li class="py-2 px-4">
         <span class="font-bold">Mis tareas</span>
@@ -42,19 +42,22 @@
             <fa-icon [size]="'lg'" [icon]="faClock" class="text-yellow-500" [fixedWidth]="true"></fa-icon>
             En progreso
           </li>
-          <li class="py-1 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"><fa-icon [size]="'lg'" class="text-green-500" [icon]="faAward" [fixedWidth]="true"></fa-icon>Completadas</li>
+          <li class="py-1 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"><fa-icon [size]="'lg'"
+              class="text-green-500" [icon]="faAward" [fixedWidth]="true"></fa-icon>Completadas</li>
 
-          <li class="py-1 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"><fa-icon [size]="'lg'" [icon]="faUncompleted" class="text-red-500" [fixedWidth]="true"></fa-icon>Vencidas</li>
+          <li class="py-1 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"><fa-icon [size]="'lg'"
+              [icon]="faUncompleted" class="text-red-500" [fixedWidth]="true"></fa-icon>Vencidas</li>
         </ul>
       </li>
       <li class="py-2 px-4">
-     <span class="font-bold">Eventos</span>
+        <span class="font-bold">Eventos</span>
         <ul class="ml-4 mt-2">
-          <li class="py-1  hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"> <fa-icon [size]="'lg'" [icon]="faCalendarDays" [fixedWidth]="true"></fa-icon> Todos los eventos</li>
+          <li class="py-1  hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer"> <fa-icon [size]="'lg'"
+              [icon]="faCalendarDays" [fixedWidth]="true"></fa-icon> Todos los eventos</li>
         </ul>
       </li>
       <li class="py-2 px-4 hover:bg-[#1b2631] rounded flex gap-4 cursor-pointer">
-       <fa-icon [size]="'lg'" [icon]="faExit" [fixedWidth]="true"></fa-icon> Cerrar sesión
+        <fa-icon [size]="'lg'" [icon]="faExit" [fixedWidth]="true"></fa-icon> Cerrar sesión
       </li>
     </ul>
 
@@ -90,8 +93,11 @@
           <option value="normal">Normal</option>
           <option value="sin prisa">Sin prisa</option>
         </select>
-        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea" placeholder="Fecha de inicio" />
-        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaFin" name="finTarea" placeholder="Fecha de fin" />
+        <label for="finTarea" class="block text-gray-500 text-sm mb-1">Fecha de fin</label>
+        <input type="datetime-local" class="input" [(ngModel)]="tareaData.fechaInicio" name="inicioTarea"
+          placeholder="Fecha de inicio" />
+        <label for="finTarea" class="block text-gray-500 text-sm mb-1">Fecha de fin</label>
+        <input id="finTarea" type="datetime-local" class="input" [(ngModel)]="tareaData.fechaFin" name="finTarea" />
       </div>
 
       <!-- FORMULARIO PARA EVENTO -->
@@ -100,8 +106,10 @@
           placeholder="Nombre del evento" />
         <textarea class="input w-full my-4 h-24" [(ngModel)]="eventoData.descripcion" name="descEvento"
           placeholder="Descripción"></textarea>
-        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaInicio" placeholder="Fecha de inicio" name="inicioEvento" />
-        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaFin" placeholder="Fecha de fin" name="finEvento" />
+        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaInicio"
+          placeholder="Fecha de inicio" name="inicioEvento" />
+        <input type="datetime-local" class="input w-full my-4" [(ngModel)]="eventoData.fechaFin"
+          placeholder="Fecha de fin" name="finEvento" />
       </div>
 
       <form method="dialog">

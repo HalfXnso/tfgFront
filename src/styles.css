@@ -4,6 +4,7 @@
 
 body{
    font-family: "Rubik", sans-serif;
+   color: #2C3E50;
 }
 .fc-day-today {
   background-color: #ebda89 !important; /* Tailwind yellow-300 */
